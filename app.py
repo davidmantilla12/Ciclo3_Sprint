@@ -1,10 +1,7 @@
-from os import system
-import sys
 from flask import Flask
 from flask import render_template
 from flask import request
-from werkzeug.datastructures import RequestCacheControl
-from werkzeug.utils import redirect
+
 
 app = Flask(__name__)
 
