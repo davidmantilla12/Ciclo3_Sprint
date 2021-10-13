@@ -3,6 +3,8 @@
 {%block title%} Iniciar Sesión {%endblock%}
 
 {%block body%}
+<br>
+<br>
     <form action="/Iniciar_Sesion", method="POST">
         {{csrf_token}}
         <input type="text" name="nombre" id="nombre" placeholder="Indique su nombre">
