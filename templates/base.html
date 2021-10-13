@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/style.css')}}" />
+    <title>{%block title%}{%endblock%}</title>
+</head>
+
+<body style="margin: 0px">
+    <div class="header">
+        <aside style="float: left">
+            <img src="{{url_for('static',filename='images/logo.png')}}" alt="logo viajes universidad del norte"
+                height="80px" />
+        </aside>
+
+        <div class="linkHeader" style="float: left">
+            <a href="" class="linkHeader">Ofertas</a>
+        </div>
+        <div class="linkHeader" style="float: left">
+            <a href="" class="linkHeader">Planes</a>
+        </div>
+        <div class="linkHeader" style="float: left">
+            <a href="" class="linkHeader">Más destinos</a>
+        </div>
+
+        <div class="header" style="float: right; width: 35%">
+            {%if sesion_iniciada:%}
+            <div style="
+                    float: left;
+                    color: white;
+                    vertical-align: middle;
+                    margin-top: 30px;
+                ">
+                <img src="{{url_for('static',filename='images/user_icon.png')}}" height="20px" alt="icono de usuario"
+                    style="margin-right: 10px;" />
+                {{nombre}}
+            </div>
+
+            <div class="linkHeader" style="float: right;">
+                <form class="linkHeader" action="/cerrar_sesion" method="POST">
+                    {{csrf_token}}
+
+                    <input class="linkHeader" type="submit" value="Cerrar Sesion">
+                </form>
+            </div>
+
+
+            <div class="linkHeader" style="float: right;background-color: #023d8b; border:0;">
+                <a class="linkHeader" href="" style="color: white">Mis vuelos</a>
+            </div>
+
+            <div class="linkHeader" style="float: right;background-color: #023d8b; border:0">
+                <a class="linkHeader" href="" style="color: white">Mi perfil</a>
+            </div>
+
+        </div>
+
+        {%else:%}
+        <div class="linkHeader" style="float: right;">
+            <a class="linkHeader" href="/Iniciar_Sesion">Iniciar Sesion</a>
+        </div>
+        {%endif%}
+    </div>
+    </div>
+
+    {%block body%}{%endblock%}
+</body>
+
+</html>

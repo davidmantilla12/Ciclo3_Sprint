@@ -1,0 +1,50 @@
+.header {
+  font-size: 20px;
+  color: blue;
+  background-color: #023d8b;
+  height: 80px;
+}
+
+div.linkHeader {
+  height: 80px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  height: 25px;
+  margin-top: 30px;
+  margin-left: 25px;
+  margin-right: 25px;
+  border: solid 1px rgba(210, 210, 212, 0.5);
+  background-color: rgba(210, 210, 212, 0.5);
+  vertical-align: middle;
+}
+
+a.linkHeader {
+  color: white;
+  font-size: 20px;
+  font-style: italic;
+  font-style: bold;
+  text-decoration: dashed;
+  vertical-align: middle;
+  height: 40px;
+}
+
+form.linkHeader {
+  color: white;
+  font-size: 20px;
+  font-style: italic;
+  font-style: bold;
+  text-decoration: dashed;
+  vertical-align: middle;
+  height: 40px;
+}
+
+input.linkHeader {
+  background-color: rgba(210, 210, 212, 0.5);
+  border: none;
+  background: none;
+  color: inherit;
+  outline: inherit;
+  font-style: inherit;
+  font-size: 15px;
+}
