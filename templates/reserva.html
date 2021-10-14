@@ -5,13 +5,8 @@ body%}
 {%if sesion_iniciada:%}
 <p>Bienvenido {{nombre}}</p>
 <p>Seleccione un vuelo para iniciar el proceso de reserva</p>
-<form action="/cerrar_sesion" method="POST">
-  {{csrf_token}}
-
-  <input type="submit" value="Cerrar Sesion" />
-</form>
 {%else:%}
-<p>Para reservar vuelos debes <a href="/Iniciar_Sesion">iniciar sesión.</a></p>
+<p>Para reservar vuelos debes iniciar sesión.
 {%endif%}
 
 <div
@@ -20,7 +15,6 @@ body%}
   <center>
     <h1>VUELO(S) SELECCIONADO(S)</h1>
 
-    <h2>Selecciona tu vuelo de ida</h2>
     <table class="resultados">
       <tr>
         <th>Hora de salida</th>
