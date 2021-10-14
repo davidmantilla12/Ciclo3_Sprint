@@ -2,20 +2,15 @@
 <h1>¡Encuentra tus vuelos deseados aquí!</h1>
 
 {%if sesion_iniciada:%}
-<p>Bienvenido {{nombre}}</p>
-<p>Seleccione un vuelo para iniciar el proceso de reserva</p>
-<form action="/cerrar_sesion" method="POST">
-  {{csrf_token}}
-
-  <input type="submit" value="Cerrar Sesion" />
-</form>
+  <p>Bienvenido {{nombre}}</p>
+  <p>Seleccione un vuelo para iniciar el proceso de reserva</p>
 {%else:%}
 <p>Para reservar vuelos debes <a href="/Iniciar_Sesion">iniciar sesión.</a></p>
 {%endif%}
 
 <div
   class="buscador"
-  style="height: 125px;margin-left:auto;margin-right:auto;background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;"
+  style="height: 150px;margin-left:auto;margin-right:auto;background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;"
 >
   <form
     class="buscador"
@@ -23,6 +18,7 @@
     style="padding-left: 10px"
     method="GET"
   >
+  <br>
     {%if ida=='IV':%}
     <input type="radio" name="ida" id="ida_y_vuelta" value="IV" checked />Ida y
     Vuelta <input type="radio" name="ida" id="ida_y_vuelta" value="I" />Solo ida
@@ -96,7 +92,7 @@
 </div>
 
 
-<form action="">
+<form action="/Reservar_vuelo", method="get">
   <div
     style="background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;color: white"
   >

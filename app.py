@@ -68,6 +68,8 @@ def miPerfil(id_usuario):
 
 @app.route("/Buscar_vuelos", methods=["GET"])
 def buscarVuelos():
+    global sesion_iniciada
+    global nombre
     # Nueva página para listar los vuelos según las características indicadas en la página de inicio
     ida= request.args.get("ida")
     origen=request.args.get("origen")
@@ -76,16 +78,17 @@ def buscarVuelos():
     fecha_vuelta=request.args.get("fecha_vuelta")
     ninos=request.args.get("niños")
     adultos=request.args.get("adultos")
-    return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos)
+    return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos,sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 
-@app.route("/Reservar_vuelo/<id_vuelo>", methods=["GET", "POST"])
-def reserva(id_vuelo):
+@app.route("/Reservar_vuelo", methods=["GET", "POST"])
+def reserva():
+    global sesion_iniciada
+    global nombre
     # Página para reserva de vuelo, seleccionar métodos de págo y confirmación de datos de los pasajeros
-    if id_vuelo in lista_vuelos:
-        return f"Página de reserva del vuelo {id_vuelo}"
-    else:
-        return f"El vuelo {id_vuelo} no existe"
+    ida= request.args.get("vuelo_ida")
+    vuelta=request.args.get("vuelo_vuelta")
+    return render_template("reserva.html",sesion_iniciada=sesion_iniciada,nombre=nombre,ida=ida,vuelta=vuelta)
 
 
 @app.route("/Mis_vuelos", methods=["GET"])
