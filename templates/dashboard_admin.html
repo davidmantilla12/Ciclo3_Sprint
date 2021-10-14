@@ -5,6 +5,13 @@
 {%block body%}
     <h1>Dashboard - Admin</h1>
 
+    <form action="/agregar_vuelo" method="POST">
+        {{csrf_token}}
+
+        <input type="submit" value="Agregar Vuelo">
+    </form>
+    <br>
+    <br>
     <form action="/cerrar_sesion" method="POST">
         {{csrf_token}}
 

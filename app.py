@@ -35,7 +35,6 @@ def registro():
     # Seleccionar método de registro e ingresar a la base de datos
     return "Página Registro"
 
-
 @app.route("/Iniciar_Sesion", methods=["GET", "POST"])
 def iniciarSesion():
     # Seleccionar método de inicio de sesion y volver a la página de inicio
@@ -120,6 +119,10 @@ def dashboard():
     # Dashboard para administrador
     return "Página Dashboard"
 
+@app.route("/agregar_vuelo", methods=['POST'])
+def agregar_vuelo():
+    return render_template('agregar_vuelo.html')
+    
 
 if (__name__=="__main__"):
     app.run(debug=True)
