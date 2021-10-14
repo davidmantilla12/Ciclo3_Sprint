@@ -1,0 +1,189 @@
+{%extends "base.html"%} {%block title%} Encuentra tu vuelo {%endblock%} {%block body%}
+<h1>¡Encuentra tus vuelos deseados aquí!</h1>
+
+{%if sesion_iniciada:%}
+<p>Bienvenido {{nombre}}</p>
+<p>Seleccione un vuelo para iniciar el proceso de reserva</p>
+<form action="/cerrar_sesion" method="POST">
+  {{csrf_token}}
+
+  <input type="submit" value="Cerrar Sesion" />
+</form>
+{%else:%}
+<p>Para reservar vuelos debes <a href="/Iniciar_Sesion">iniciar sesión.</a></p>
+{%endif%}
+
+<div
+  class="buscador"
+  style="height: 125px;margin-left:auto;margin-right:auto;background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;"
+>
+  <form
+    class="buscador"
+    action="/Buscar_vuelos"
+    style="padding-left: 10px"
+    method="GET"
+  >
+    {%if ida=='IV':%}
+    <input type="radio" name="ida" id="ida_y_vuelta" value="IV" checked />Ida y
+    Vuelta <input type="radio" name="ida" id="ida_y_vuelta" value="I" />Solo ida
+    {%else:%} <input type="radio" name="ida" id="ida_y_vuelta" value="IV" />Ida
+    y Vuelta
+    <input type="radio" name="ida" id="ida_y_vuelta" value="I" checked />Solo
+    ida {%endif%} <br /><br />
+    <div class="buscador" style="float: left; margin-right: 20px">
+      <h3>¿A donde viajas?</h3>
+      <input
+        type="text"
+        name="origen"
+        placeholder="Origen"
+        value="{{origen}}"
+      />
+      <input
+        type="text"
+        name="destino"
+        placeholder="Destino"
+        value="{{destino}}"
+        style="margin-left: 20px"
+      />
+    </div>
+
+    <div class="buscador" style="float: left; margin-right: 20px">
+      <h3>¿Cuando Viajas?</h3>
+      <input type="date" name="fecha_ida" value="{{fecha_ida}}" />
+      <input
+        type="date"
+        name="fecha_vuelta"
+        value="{{fecha_vuelta}}"
+        style="margin-left: 20px"
+      />
+    </div>
+
+    <div class="buscador" style="float: left; margin-right: 20px">
+      <h3>¿Con quién viajas?</h3>
+      <input
+        style="width: 25px"
+        type="number"
+        name="adultos"
+        id="adultos"
+        value="{{adultos}}"
+      />
+      Adultos
+      <input
+        style="width: 25px"
+        type="number"
+        name="niños"
+        id="niños"
+        value="{{ninos}}"
+      />
+      Niños
+    </div>
+
+    <div class="buscador" style="float: right; margin-right: 20px">
+      <input
+        type="submit"
+        value="Modificar"
+        style="
+          height: 80px;
+          width: 80px;
+          background-color: rgb(228, 53, 53);
+          color: white;
+          font-size: 15px;
+          font-style: italic;
+        "
+      />
+    </div>
+  </form>
+</div>
+
+
+<form action="">
+  <div
+    style="background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;color: white"
+  >
+    <center>
+      <h1>RESULTADOS DE BÚSQUEDA</h1>
+
+      <h2>Selecciona tu vuelo de ida</h2>
+      <table class="resultados">
+        <tr>
+          <th>Hora de salida</th>
+          <th>Hora de llegada</th>
+          <th>Económica</th>
+          <th>Promo</th>
+          <th>Ejecutiva</th>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="radio" name="vuelo_ida" value="id1" required checked />
+            10:00
+          </td>
+          <td>11:00</td>
+          <td>$100.000</td>
+          <td>$150.000</td>
+          <td>$250.000</td>
+        </tr>
+
+        <tr>
+          <td><input type="radio" name="vuelo_ida" value="id2" /> 13:00</td>
+          <td>14:00</td>
+          <td>$110.000</td>
+          <td>$170.000</td>
+          <td>$300.000</td>
+        </tr>
+      </table>
+
+      {%if ida=='IV':%}
+      <h2>Selecciona tu vuelo de vuelta</h2>
+      <table class="resultados">
+        <tr>
+          <th>Hora de salida</th>
+          <th>Hora de llegada</th>
+          <th>Económica</th>
+          <th>Promo</th>
+          <th>Ejecutiva</th>
+        </tr>
+
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="vuelo_vuelta"
+              value="id1"
+              required
+              checked
+            />
+            10:00
+          </td>
+          <td>11:00</td>
+          <td>$100.000</td>
+          <td>$150.000</td>
+          <td>$250.000</td>
+        </tr>
+
+        <tr>
+          <td><input type="radio" name="vuelo_vuelta" value="id2" /> 13:00</td>
+          <td>14:00</td>
+          <td>$110.000</td>
+          <td>$170.000</td>
+          <td>$300.000</td>
+        </tr>
+      </table>
+      {%endif%}
+      <br />
+      <input
+        type="submit"
+        value="¡Reservar ahora!"
+        style="
+          font-size: 30px;
+          height: 80px;
+          background-color: rgb(228, 53, 53);
+          color: white;
+          font-style: italic;
+        "
+      />
+    </center>
+  </div>
+</form>
+
+{%endblock%}

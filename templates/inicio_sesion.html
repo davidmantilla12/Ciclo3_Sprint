@@ -1,13 +1,44 @@
-{%extends "base.html"%}
+{%extends "base.html"%} {%block title%} Iniciar Sesión {%endblock%} {%block
+body%}
+<br />
+<br />
+<div class="login">
+  <center>
+    <br />
+    <h1 style="margin-right: auto; margin-left: auto">Iniciar Sesión</h1>
+    <form action="/Iniciar_Sesion" , method="POST">
+      {{csrf_token}}
 
-{%block title%} Iniciar Sesión {%endblock%}
-
-{%block body%}
-<br>
-<br>
-    <form action="/Iniciar_Sesion", method="POST">
-        {{csrf_token}}
-        <input type="text" name="nombre" id="nombre" placeholder="Indique su nombre">
-        <input type="submit" value="Iniciar Sesión">
+      <div style="width: fit-content">
+        <label for="username">Usuario</label><br />
+        <input
+          type="text"
+          name="nombre"
+          id="nombre"
+          style="margin-right: auto; margin-left: auto; width: 200px"
+        />
+      </div>
+      <br />
+      <div>
+        <label for="password">Contraseña</label><br />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          style="margin-right: auto; margin-left: auto; width: 200px"
+        />
+      </div>
+      <br />
+      <div>
+        <input
+          type="submit"
+          value="Iniciar Sesion"
+          style="margin-right: auto; margin-left: auto"
+        />
+      </div>
+      <br />
     </form>
+  </center>
+</div>
+
 {%endblock%}

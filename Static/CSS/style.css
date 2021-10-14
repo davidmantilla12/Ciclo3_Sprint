@@ -54,3 +54,34 @@ input.linkHeader {
   font-style: inherit;
   font-size: 15px;
 }
+
+div.login{
+  width: 500px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #023d8bc4;
+  color: white;
+}
+
+.buscador{
+  color: white;
+  background-color:none;
+  font-style: bold;
+  width: fit-content;
+}
+
+table.resultados{}
+
+th,td{
+  width: 20%;
+  border: solid 1px #023d8b;
+  background-color: #b6c4d4;
+  color: black;
+}
+th{
+  color: white;
+  background-color: #023d8b;
+  text-align: center;
+  
+}

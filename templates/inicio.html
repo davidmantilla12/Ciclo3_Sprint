@@ -1,22 +1,50 @@
-{%extends "base.html"%}
+{%extends "base.html"%} {%block title%} inicio {%endblock%} {%block body%}
+<h1>¡Encuentra tus vuelos deseados aquí!</h1>
 
-{%block title%} inicio {%endblock%}
+{%if sesion_iniciada:%}
+<p>Bienvenido {{nombre}}</p>
+<p>Busca en el cuadro de abajo un vuelo para iniciar</p>
+{%else:%}
+<p>Busca en el cuadro de abajo un vuelo para iniciar; recuerda que para reservar vuelos debes iniciar sesión.</p>
+{%endif%}
 
-{%block body%}
-    <h1>Página de inicio</h1>
-    
-    
-    {%if sesion_iniciada:%}
-        <p>Bienvenido {{nombre}}</p>
-        <br>
-        <p>Seleccione un vuelo para iniciar el proceso de reserva</p>
-        <form action="/cerrar_sesion" method="POST">
-            {{csrf_token}}
+<div class="buscador" style="height: 150px;margin-left:auto;margin-right:auto;background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;">
+    <br>
+  <form class="buscador" action="/Buscar_vuelos" style="padding-left:10px;" method="GET">
+    <input type="radio" name="ida" id="ida_y_vuelta" value="IV" checked/>Ida y Vuelta
+    <input type="radio" name="ida" id="ida_y_vuelta" value="I" />Solo ida <br /><br />
+    <div class="buscador" style="float: left; margin-right: 20px">
+      <h3>¿A donde viajas?</h3>
+      <input type="text" name="origen" placeholder="Origen" />
+      <input
+        type="text"
+        name="destino"
+        placeholder="Destino"
+        style="margin-left: 20px"
+      />
+    </div>
 
-            <input type="submit" value="Cerrar Sesion">
-        </form>
-    {%else:%}
-        
-        <p>Para reservar vuelos debes <a href="/Iniciar_Sesion">iniciar sesión.</a></p>
-    {%endif%}
+    <div class="buscador" style="float: left; margin-right: 20px">
+      <h3>¿Cuando Viajas?</h3>
+      <input type="date" name="fecha_ida" />
+      <input type="date" name="fecha_vuelta" style="margin-left: 20px"/>
+    </div>
+
+    <div class="buscador" style="float: left; margin-right: 20px">
+        <h3>¿Con quién viajas?</h3>
+        <input style="width: 25px;" type="number" name="adultos" id="adultos" value="1"> Adultos <input style="width: 25px;" type="number" name="niños" id="niños"> Niños 
+    </div>
+
+    <div class="buscador" style="float: right; margin-right: 20px">
+        <input type="submit" value="Buscar!" 
+        style="height:80px;
+        width:80px;
+        background-color: rgb(228, 53, 53);
+        color:white;
+        font-size:15px;
+        font-style: italic">
+    </div>
+  </form>
+</div>
+
 {%endblock%}

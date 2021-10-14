@@ -66,10 +66,17 @@ def miPerfil(id_usuario):
         return f"Error, el usuario {id_usuario} no existe"
 
 
-@app.route("/Buscar_vuelos/<param_busqueda>", methods=["GET"])
-def buscarVuelos(param_busqueda):
+@app.route("/Buscar_vuelos", methods=["GET"])
+def buscarVuelos():
     # Nueva página para listar los vuelos según las características indicadas en la página de inicio
-    return f"Página buscar vuelos según parámetros: {param_busqueda}"
+    ida= request.args.get("ida")
+    origen=request.args.get("origen")
+    destino=request.args.get("destino")
+    fecha_ida=request.args.get("fecha_ida")
+    fecha_vuelta=request.args.get("fecha_vuelta")
+    ninos=request.args.get("niños")
+    adultos=request.args.get("adultos")
+    return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos)
 
 
 @app.route("/Reservar_vuelo/<id_vuelo>", methods=["GET", "POST"])
