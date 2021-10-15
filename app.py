@@ -24,7 +24,7 @@ def inicio_usuario():
     # sino -> página de bienvenida para usuarios
 
     if nombre =="Admin":
-        return render_template("dashboard_admin.html")
+        return render_template("dashboard_admin.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
     else:
         return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
 
