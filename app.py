@@ -98,7 +98,7 @@ def misVuelos():
 
 @app.route("/coment_eval")
 def coment_eval():
-    return render_template("coment_eval.html")
+    return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 @app.route("/Calificar/<id_vuelo>", methods=["GET", "POST"])
 def calificar(id_vuelo):
@@ -125,7 +125,7 @@ def dashboard():
 
 @app.route("/agregar_vuelo", methods=['GET'])
 def agregar_vuelo():
-    return render_template('agregar_vuelo.html')
+    return render_template('agregar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 
 if (__name__=="__main__"):
