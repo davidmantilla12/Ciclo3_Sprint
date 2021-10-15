@@ -22,10 +22,9 @@ nombre =""
 def inicio_usuario():
     # Si ya se inició sesión  -> Pantalla de inicio para usuario específico
     # sino -> página de bienvenida para usuarios
-    global sesion_iniciada
-    global nombre
+
     if nombre =="Admin":
-        return render_template("dashboard_admin.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
+        return render_template("dashboard_admin.html")
     else:
         return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
 
@@ -34,7 +33,9 @@ def inicio_usuario():
 @app.route("/Registro", methods=["GET", "POST"])
 def registro():
     # Seleccionar método de registro e ingresar a la base de datos
-    return "Página Registro"
+    global registro_exitoso
+    return render_template('/registro.html')
+
 
 @app.route("/Iniciar_Sesion", methods=["GET", "POST"])
 def iniciarSesion():
@@ -96,9 +97,6 @@ def misVuelos():
     # Página para listar los vuelos tomados y reservados
     return "Página Mis vuelos"
 
-@app.route("/coment_eval")
-def coment_eval():
-    return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 @app.route("/Calificar/<id_vuelo>", methods=["GET", "POST"])
 def calificar(id_vuelo):
@@ -122,10 +120,6 @@ def comentarios(id_vuelo):
 def dashboard():
     # Dashboard para administrador
     return "Página Dashboard"
-
-@app.route("/agregar_vuelo", methods=['GET'])
-def agregar_vuelo():
-    return render_template('agregar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 
 if (__name__=="__main__"):
