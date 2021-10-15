@@ -95,6 +95,9 @@ def misVuelos():
     # Página para listar los vuelos tomados y reservados
     return "Página Mis vuelos"
 
+@app.route("/coment_eval")
+def coment_eval():
+    return render_template("coment_eval.html")
 
 @app.route("/Calificar/<id_vuelo>", methods=["GET", "POST"])
 def calificar(id_vuelo):
@@ -122,7 +125,7 @@ def dashboard():
 @app.route("/agregar_vuelo", methods=['POST'])
 def agregar_vuelo():
     return render_template('agregar_vuelo.html')
-    
+
 
 if (__name__=="__main__"):
     app.run(debug=True)

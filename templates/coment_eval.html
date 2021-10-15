@@ -1,0 +1,16 @@
+{%extends "base.html"%}
+
+{%block title%} Comentarios {%endblock%}
+
+{%block body%}
+    <h1>Comentarios y evaluación de vuelos</h1>
+    <div>
+        <form>
+            <p>Nombre: <input type="text" id="nombre" name="nombre" maxlength="100"/></p>
+            <p>Email: <input type="email" id="email" name="email" maxlength="100"/></p>
+            <p>Código Vuelo: <input type="text" id="nombre" name="nombre" maxlength="100"/></p>
+            <p>Comentario: <input type="text" id="nombre" name="nombre" maxlength="100" style="height: 20ch;"/></p>
+            <button type="submit" value="Enviar">Enviar</button>
+        </form>    
+    </div>
+{%endblock%}
