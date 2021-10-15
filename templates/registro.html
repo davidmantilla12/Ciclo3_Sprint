@@ -1,0 +1,50 @@
+{%extends "base.html"%} {%block title%} Register {%endblock%} {%block body%}
+<br />
+<br />
+<div class="register">
+    <center>
+        <br />
+
+        <form action="/Registro" method="POST" name="formRegistro">
+            <div>
+                <img src="{{url_for('static', filename='images/user_icon.png')}}" sizes="50px" alt="iconoUsuario" style="margin-right: 10px;">
+            </div>
+            <div>
+                <p><button style="size: 2px;">select from</button><br><br><button style="size: 2px;">take a picture</button></p>
+            </div>
+            <div>
+                <h2 style="margin-right: auto; margin-left: auto">Crear usuario</h2>
+            </div>
+            <div>
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" id="nombre" name="nombre" maxlength="30" placeholder="Escriba el nombre" required="true" /><br>
+
+                <label for="user ">Usuario:</label><br>
+                <input type="text" id="user" name="user" maxlength="10" placeholder="Escriba el usuario" required="true" /><br>
+
+                <label>Sexo: <input type="radio" id="hombre " name="sexo" value="h">Hombre
+                <input type="radio" id="mujer" name="sexo" value="m">Mujer</label><br>
+
+                <label for="email"> Email:</label><br>
+                <input type="email" id="email" name="email" maxlength="50" placeholder="Escribe email" required="true" /><br>
+
+                <label for="contraseña">Contraseña: </label><br>
+                <input type="password" id="password" name="password" /><br>
+
+                <p><input type="checkbox" name="condiciones" /> Declaro haber leido y acepto las condiciones generales del programa y
+                    <br>la normativa acerca de proteccion de datos </p>
+
+                <button id="botonReg">
+                    <a href="/Iniciar_Sesion">Registrarse</a>
+                </button>
+            </div><br>
+            <div>
+                <a style="color:aquamarine;" href="">Registrarse con Facebook</a>&emsp;
+                <a style="color:aquamarine;" href="">Registrarse con Google</a>
+            </div>
+
+        </form>
+    </center>
+</div>
+
+{%endblock%}
