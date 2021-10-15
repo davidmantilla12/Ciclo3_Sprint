@@ -1,20 +1,51 @@
-{%extends "base.html"%}
+{%extends "base.html"%} {%block title%} Inicio - admin {%endblock%} {%block
+body%}
+<h1>Dashboard - Admin</h1>
 
-{%block title%} Inicio - admin {%endblock%}
-
-{%block body%}
-    <h1>Dashboard - Admin</h1>
-
-    <form action="/agregar_vuelo" method="POST">
-        {{csrf_token}}
-
-        <input type="submit" value="Agregar Vuelo">
-    </form>
-    <br>
-    <br>
-    <form action="/cerrar_sesion" method="POST">
-        {{csrf_token}}
-
-        <input type="submit" value="Cerrar Sesion">
-    </form>
+<div>
+  <nav id="menu">
+    <ul>
+      <li>
+        Gestionar vuelos <br />
+        <nav id="menu_princ">
+          <ul>
+            <li><a href="/agregar_vuelo"> Agregar vuelo</a><br /></li>
+            <li><a href="/agregar_vuelo"> Editar vuelo</a><br /></li>
+            <li><a href="/agregar_vuelo"> Eliminar vuelo</a><br /></li>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        Gestionar pilotos <br />
+        <nav id="menu_princ">
+          <ul>
+            <li><a href="/agregar_vuelo"> Agregar piloto</a><br /></li>
+            <li><a href="/agregar_vuelo"> Editar piloto</a><br /></li>
+            <li><a href="/agregar_vuelo"> Eliminar piloto</a><br /></li>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        Gestionar usuarios <br />
+        <nav id="menu_princ">
+          <ul>
+            <li><a href="/agregar_vuelo"> Agregar usuario</a><br /></li>
+            <li><a href="/agregar_vuelo"> Editar usuario</a><br /></li>
+            <li><a href="/agregar_vuelo"> Eliminar usuario</a><br /></li>
+          </ul>
+        </nav>
+      </li>
+      <li>
+        Gestionar comentarios <br />
+        <nav id="menu_princ">
+          <ul>
+            <li><a href="/coment_eval"> Agregar comentario</a><br /></li>
+            <li><a href="/coment_eval"> Editar comentario</a><br /></li>
+            <li><a href="/coment_eval"> Eliminar comentario</a><br /></li>
+          </ul>
+        </nav>
+      </li>
+    </ul>
+  </nav>
+</div>
 {%endblock%}

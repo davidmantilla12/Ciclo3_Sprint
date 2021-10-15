@@ -122,7 +122,7 @@ def dashboard():
     # Dashboard para administrador
     return "Página Dashboard"
 
-@app.route("/agregar_vuelo", methods=['POST'])
+@app.route("/agregar_vuelo", methods=['GET'])
 def agregar_vuelo():
     return render_template('agregar_vuelo.html')
 
