@@ -22,7 +22,8 @@ nombre =""
 def inicio_usuario():
     # Si ya se inició sesión  -> Pantalla de inicio para usuario específico
     # sino -> página de bienvenida para usuarios
-
+    global sesion_iniciada
+    global nombre
     if nombre =="Admin":
         return render_template("dashboard_admin.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
     else:
