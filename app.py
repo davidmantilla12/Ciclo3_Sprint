@@ -1,22 +1,14 @@
+import os
 import sqlite3
 from sqlite3 import Error
-from flask import Flask
+from flask import Flask,flash
 from flask import render_template
 from flask import request
 from flask import redirect
-
+from vuelos import vuelo
 
 app = Flask(__name__)
-
-lista_usuarios = ["Danna","Dario","Jose","Alejandra"]
-lista_vuelos = {
-    "1": "vuelo 1", 
-    "2": "vuelo 2", 
-    "3": "vuelo 3",
-    "4": "vuelo 4",
-    "5": "vuelo 5"   
-}
-
+app.secret_key=os.urandom(24)
 sesion_iniciada =False
 nombre =""
 
@@ -24,11 +16,11 @@ nombre =""
 def inicio_usuario():
     # Si ya se inició sesión  -> Pantalla de inicio para usuario específico
     # sino -> página de bienvenida para usuarios
-
+    form=vuelo()
     if nombre =="Admin":
         return render_template("dashboard_admin.html",sesion_iniciada=sesion_iniciada,nombre =nombre)
     else:
-        return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
+        return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre,form=form)
 
 
 
@@ -69,18 +61,35 @@ def miPerfil(id_usuario):
         return f"Error, el usuario {id_usuario} no existe"
 
 
-@app.route("/Buscar_vuelos", methods=["GET"])
+@app.route("/Buscar_vuelos", methods=["POST"])
 def buscarVuelos():
     global sesion_iniciada
     global nombre
+    form = vuelo()
     # Nueva página para listar los vuelos según las características indicadas en la página de inicio
     ida= request.args.get("ida")
-    origen=request.args.get("origen")
-    destino=request.args.get("destino")
-    fecha_ida=request.args.get("fecha_ida")
-    fecha_vuelta=request.args.get("fecha_vuelta")
+    origen=form.origen.data
+    destino=form.destino.data
+    fecha_ida=form.fecha.data
+    fecha_vuelta=form.fecha_vuelta.data
     ninos=request.args.get("niños")
-    adultos=request.args.get("adultos")
+    adultos=request.args.get("adultos") 
+
+    try:
+        with sqlite3.connect("viajesun.db") as con:
+            
+            con.row_factory=sqlite3.Row
+            
+            cur = con.cursor()
+            
+            cur.execute("SELECT * FROM vuelos WHERE origen=? AND destino=? AND fecha=?", [origen,destino,fecha_ida]) 
+
+            row=cur.fetchall()
+            return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos,sesion_iniciada=sesion_iniciada,nombre=nombre,row=row)        
+
+    except Error:
+        print(Error)
+        flash(Error)
     return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos,sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 

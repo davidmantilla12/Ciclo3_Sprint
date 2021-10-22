@@ -10,24 +10,21 @@
 
 <div class="buscador" style="height: 150px;margin-left:auto;margin-right:auto;background-image: url({{url_for('static',filename='images/background_search_box.png')}}); background-position: 50%; background-repeat:repeat-y;">
     <br>
-  <form class="buscador" action="/Buscar_vuelos" style="padding-left:10px;" method="GET">
-    <input type="radio" name="ida" id="ida_y_vuelta" value="IV" checked/>Ida y Vuelta
-    <input type="radio" name="ida" id="ida_y_vuelta" value="I" />Solo ida <br /><br />
+  <form class="buscador" action="/Buscar_vuelos" style="padding-left:10px;" method="POST">
+    {{form.hidden_tag()}}
+    <input type="radio" name="ida" id="ida_y_vuelta" value="IV" onclick="ida_vuelta()" checked/>Ida y Vuelta
+    <input type="radio" name="ida" id="ida_y_vuelta_SI" value="I" onclick="soloIda()"/>Solo ida <br /><br />
     <div class="buscador" style="float: left; margin-right: 20px">
       <h3>¿A donde viajas?</h3>
-      <input type="text" name="origen" placeholder="Origen" />
-      <input
-        type="text"
-        name="destino"
-        placeholder="Destino"
-        style="margin-left: 20px"
-      />
+      {{form.origen()}}
+      {{form.destino()}}
     </div>
 
     <div class="buscador" style="float: left; margin-right: 20px">
       <h3>¿Cuando Viajas?</h3>
-      <input type="date" name="fecha_ida" />
-      <input type="date" name="fecha_vuelta" style="margin-left: 20px"/>
+      {{form.fecha}}
+      {{form.fecha_vuelta}}
+      
     </div>
 
     <div class="buscador" style="float: left; margin-right: 20px">
@@ -46,5 +43,15 @@
     </div>
   </form>
 </div>
+<script type="text/javascript">
+  function soloIda() {
+    document.getElementById("fecha_vuelta").style.opacity="0";
+  }
+  function ida_vuelta() {
+    document.getElementById("fecha_vuelta").style.opacity="1";
+    document.getElementById("fecha_vuelta").style.userSelect="auto";
+  }
+</script>
 
 {%endblock%}
+
