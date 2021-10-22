@@ -1,10 +1,9 @@
 import os
 import sqlite3
 from sqlite3 import Error
-from flask import Flask,flash
-from flask import render_template
-from flask import request
-from flask import redirect
+
+from flask import Flask, flash, redirect, render_template, request
+
 from vuelos import vuelo
 
 app = Flask(__name__)
@@ -109,18 +108,51 @@ def misVuelos():
     return "Página Mis vuelos"
 
 
-@app.route("/agregar_vuelo", methods=['GET'])
+@app.route("/agregar_vuelo", methods=['GET','POST'])
 def agregar_vuelo():
-    return render_template('agregar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre)
+    form=vuelo()
+    if request.method=='POST':
+        origen=form.origen.data
+        destino=form.destino.data
+        hora_salida=str(form.hora_salida.data)
+        hora_llegada=str(form.hora_llegada.data) 
+        fecha=str(form.fecha.data)
+        piloto=form.piloto.data
+        asientos=form.asientos.data
+        valor=str(form.valor.data)
+        try:
+            with sqlite3.connect('viajesun.db') as con:
+                cur=con.cursor()                
+                cur.execute("INSERT INTO vuelos (origen, destino, hora_salida, hora_llegada, fecha, piloto, asientos, valor) VALUES (?,?,?,?,?,?,?,?);", [origen,destino,hora_salida,hora_llegada,fecha,piloto,asientos,valor])
+                con.commit()
+                print("Vuelo añadido")
+        except Error:
+            print(Error)
+        
+    return render_template('agregar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form)
+
+@app.route("/editar_vuelo", methods=['GET','POST'])
+def editar_vuelo():
+    form=vuelo()
+    if request.method=='POST':
+        origen=form.origen.data
+        destino=form.destino.data
+        hora_salida=str(form.hora_salida.data)
+        hora_llegada=str(form.hora_llegada.data) 
+        fecha=str(form.fecha.data)
+        piloto=form.piloto.data
+        asientos=form.asientos.data
+        valor=str(form.valor.data)
+        try:
+            with sqlite3.connect('viajesun.db') as con:
+                cur=con.cursor()                
+                cur.execute("INSERT INTO vuelos (origen, destino, hora_salida, hora_llegada, fecha, piloto, asientos, valor) VALUES (?,?,?,?,?,?,?,?);", [origen,destino,hora_salida,hora_llegada,fecha,piloto,asientos,valor])
+                con.commit()
+                print("Vuelo añadido")
+        except Error:
+            print(Error)
+        
+    return render_template('editar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form)
 
 if (__name__=="__main__"):
     app.run(debug=True)
-
-
-
-def sql_connection():
-    try:
-        con = sqlite3.connect("viajesun.db")
-        return con
-    except Error:
-        print(Error)

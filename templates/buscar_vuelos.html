@@ -1,9 +1,6 @@
 {%extends "base.html"%} {%block title%} Encuentra tu vuelo {%endblock%} {%block body%}
 <h1>¡Encuentra tus vuelos deseados aquí!</h1>
 
-<?php
-
-?>
 {%if sesion_iniciada:%}
   <p>Bienvenido {{nombre}}</p>
   <p>Seleccione un vuelo para iniciar el proceso de reserva</p>
@@ -124,9 +121,9 @@
         <tbody>
           <th>Hora de salida</th>
           <th>Hora de llegada</th>
-          <th>Económica</th>
-          <th>Promo</th>
-          <th>Ejecutiva</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Valor</th>
         </tbody>
 
         {%for r in row%}
@@ -136,8 +133,8 @@
             {{r.hora_salida}}
           </td>
           <td>{{r.hora_llegada}}</td>
-          <td>{{r.valor}}</td>
-          <td>{{r.valor}}</td>
+          <td>{{r.origen}}</td>
+          <td>{{r.destino}}</td>
           <td>{{r.valor}}</td>
         </tr>
         {%endfor%}  
