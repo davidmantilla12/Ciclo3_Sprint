@@ -9,13 +9,13 @@
     <title>{%block title%}{%endblock%}</title>
 </head>
 
-<body style="margin: 0px " >
+<body style="margin: 0px ">
     <div class="header">
         <aside style="float: left">
-            <a href="/"><img src="{{url_for('static',filename='images/logo.png')}}" alt="logo viajes universidad del norte"
-                height="80px" /></a>
+            <a href="/" class="linkHeader">
+                <img src="{{url_for('static',filename='images/logo.png')}}" alt="logo viajes universidad del norte" height="80px" href="/" />
+            </a>
         </aside>
-
         <div class="linkHeader" style="float: left">
             <a href="" class="linkHeader">Ofertas</a>
         </div>
@@ -25,12 +25,8 @@
         <div class="linkHeader" style="float: left">
             <a href="" class="linkHeader">Más destinos</a>
         </div>
-        <div class="linkHeader" style="float: left">
-            <a href="/coment_eval" class="linkHeader">Comentarios y evaluación</a>
-        </div>
 
-
-        <div class="header" style="float: right; width: 40%">
+        <div class="header" style="float: right; width: 45%">
             {%if sesion_iniciada:%}
             <div style="
                     float: left;
@@ -38,9 +34,7 @@
                     vertical-align: middle;
                     margin-top: 30px;
                 ">
-                <img src="{{url_for('static',filename='images/user_icon.png')}}" height="20px" alt="icono de usuario"
-                    style="margin-right: 10px;" />
-                {{nombre}}
+                <img src="{{url_for('static',filename='images/user_icon.png')}}" height="20px" alt="icono de usuario" style="margin-right: 10px;" /> {{nombre}}
             </div>
 
             <div class="linkHeader" style="float: right;">
@@ -59,18 +53,23 @@
             <div class="linkHeader" style="float: right;background-color: #023d8b; border:0">
                 <a class="linkHeader" href="" style="color: white">Mi perfil</a>
             </div>
-
-        </div>
-
-        {%else:%}
+            {%else:%}
             <div class="linkHeader" style="float: right;">
                 <a class="linkHeader" href="/Iniciar_Sesion">Iniciar Sesion</a>
             </div>
-        {%endif%}
+            <div class="linkHeader" style="float: right;">
+                <a class="linkHeader" href="/Registro">Registrarse</a>
+            </div>
+            {%endif%}
+        </div>
+
+
     </div>
     </div>
 
     {%block body%}{%endblock%}
 </body>
+
+</html>
 
 </html>
