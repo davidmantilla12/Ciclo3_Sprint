@@ -79,11 +79,8 @@ def buscarVuelos():
         with sqlite3.connect("viajesun.db") as con:
             
             con.row_factory=sqlite3.Row
-            
             cur = con.cursor()
-            
             cur.execute("SELECT * FROM vuelos WHERE origen=? AND destino=? AND fecha=?", [origen,destino,fecha_ida]) 
-
             row=cur.fetchall()
             return render_template("buscar_vuelos.html",ida=ida,origen=origen,destino=destino,fecha_ida=fecha_ida,fecha_vuelta=fecha_vuelta,ninos=ninos,adultos=adultos,sesion_iniciada=sesion_iniciada,nombre=nombre,row=row)        
 
