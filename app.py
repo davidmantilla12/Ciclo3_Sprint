@@ -1,3 +1,5 @@
+import sqlite3
+from sqlite3 import Error
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -102,3 +104,12 @@ def misVuelos():
 
 if (__name__=="__main__"):
     app.run(debug=True)
+
+
+
+def sql_connection():
+    try:
+        con = sqlite3.connect("viajesun .db")
+        return con
+    except Error:
+        print(Error)
