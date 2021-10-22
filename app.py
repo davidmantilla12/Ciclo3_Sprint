@@ -26,7 +26,7 @@ def inicio_usuario():
     # sino -> página de bienvenida para usuarios
 
     if nombre =="Admin":
-        return render_template("dashboard_admin.html")
+        return render_template("dashboard_admin.html",sesion_iniciada=sesion_iniciada,nombre =nombre)
     else:
         return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre)
 
@@ -93,6 +93,9 @@ def reserva():
     vuelta=request.args.get("vuelo_vuelta")
     return render_template("reserva.html",sesion_iniciada=sesion_iniciada,nombre=nombre,ida=ida,vuelta=vuelta)
 
+@app.route("/coment_eval")
+def coment_eval():
+    return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 @app.route("/Mis_vuelos", methods=["GET"])
 def misVuelos():
@@ -100,7 +103,9 @@ def misVuelos():
     return "Página Mis vuelos"
 
 
-
+@app.route("/agregar_vuelo", methods=['GET'])
+def agregar_vuelo():
+    return render_template('agregar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 if (__name__=="__main__"):
     app.run(debug=True)
@@ -109,7 +114,7 @@ if (__name__=="__main__"):
 
 def sql_connection():
     try:
-        con = sqlite3.connect("viajesun .db")
+        con = sqlite3.connect("viajesun.db")
         return con
     except Error:
         print(Error)
