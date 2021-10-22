@@ -100,28 +100,6 @@ def misVuelos():
 def coment_eval():
     return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
-@app.route("/Calificar/<id_vuelo>", methods=["GET", "POST"])
-def calificar(id_vuelo):
-    # Página para anotar calificaciones, que surge de pestaña Mis vuelos, mostrar detalles del vuelo a calificar
-    if id_vuelo in lista_vuelos:
-        return f"Página para calificar el vuelo {id_vuelo}"
-    else:
-        return f"El vuelo {id_vuelo} no existe"
-
-
-@app.route("/Ver_comentarios/<id_vuelo>", methods=["GET"])
-def comentarios(id_vuelo):
-    # página para buscar comentarios de acuerdo al vuelo seleccionado en la página buscar vuelos
-    if id_vuelo in lista_vuelos:
-        return f"Página de comentarios del vuelo {id_vuelo}"
-    else:
-        return f"El vuelo {id_vuelo} no existe"
-
-
-@app.route("/admin", methods=["GET", "POST"])
-def dashboard():
-    # Dashboard para administrador
-    return "Página Dashboard"
 
 @app.route("/agregar_vuelo", methods=['GET'])
 def agregar_vuelo():
