@@ -1,0 +1,14 @@
+{%extends "base.html"%}
+
+{%block title%} Eliminar Piloto {%endblock%}
+
+{%block body%}
+    <h1>Admin - Eliminar Piloto</h1>
+    <br>
+    <form action="{{ url_for('eliminar_piloto') }}" method="POST" name="formEliminarPiloto">
+        <p>ID del piloto: {{form.id_piloto(value=row["id_Piloto"])}} </p>
+        <p>Nombre completo: {{form.nombre(value=row["nombre"])}}</p>
+        <p>Cedula: {{form.cedula(value=row["cedula"])}}</p>
+        <p>Trama de vuelos: {{form.vuelos(value=row["vuelos_asignados"])}} </p>
+        <p>{{form.enviar(value="Eliminar piloto")}} {{form.completar}} </p>
+{%endblock%}

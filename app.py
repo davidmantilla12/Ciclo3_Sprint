@@ -5,6 +5,7 @@ from sqlite3 import Error
 from flask import Flask, flash, redirect, render_template, request
 
 from vuelos import vuelo
+from pilotos import piloto
 
 app = Flask(__name__)
 app.secret_key=os.urandom(24)
@@ -20,8 +21,6 @@ def inicio_usuario():
         return render_template("dashboard_admin.html",sesion_iniciada=sesion_iniciada,nombre =nombre)
     else:
         return render_template("inicio.html", sesion_iniciada=sesion_iniciada,nombre =nombre,form=form)
-
-
 
 @app.route("/Registro", methods=["GET", "POST"])
 def registro():
@@ -100,6 +99,8 @@ def reserva():
 
 @app.route("/coment_eval")
 def coment_eval():
+    global nombre
+    global sesion_iniciada
     return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 @app.route("/Mis_vuelos", methods=["GET"])
@@ -107,9 +108,10 @@ def misVuelos():
     # Página para listar los vuelos tomados y reservados
     return "Página Mis vuelos"
 
-
 @app.route("/agregar_vuelo", methods=['GET','POST'])
 def agregar_vuelo():
+    global nombre
+    global sesion_iniciada
     form=vuelo()
     if request.method=='POST':
         origen=form.origen.data
@@ -133,6 +135,8 @@ def agregar_vuelo():
 
 @app.route("/editar_vuelo", methods=['GET','POST'])
 def editar_vuelo():
+    global nombre
+    global sesion_iniciada
     form=vuelo()
     row={
         "id_Vuelo":"",
@@ -182,6 +186,8 @@ def editar_vuelo():
 
 @app.route("/eliminar_vuelo", methods=['GET','POST'])
 def eliminar_vuelo():
+    global nombre
+    global sesion_iniciada
     form=vuelo()
     row={
         "id_Vuelo":"",
@@ -217,6 +223,102 @@ def eliminar_vuelo():
                 print(Error)
         
     return render_template('eliminar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
+@app.route("/agregar_piloto", methods=['GET','POST'])
+def agregar_piloto():
+    global nombre
+    global sesion_iniciada
+    form=piloto()
+    if request.method=='POST':
+        nombre_piloto=form.nombre.data
+        cedula=form.cedula.data
+        trama_vuelos=form.vuelos.data
+        try:
+            with sqlite3.connect('viajesun.db') as con:
+                cur=con.cursor()                
+                cur.execute("INSERT INTO pilotos (nombre, cedula, vuelos_asignados) VALUES (?,?,?)", [nombre_piloto,cedula,trama_vuelos])
+                con.commit()
+                print("Piloto añadido")
+        except Error:
+            print(Error)    
+    return render_template('agregar_piloto.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form)
+
+@app.route("/editar_piloto", methods=['GET','POST'])
+def editar_piloto():
+    global nombre
+    global sesion_iniciada
+
+    form=piloto()
+
+    row={
+        "id_Piloto":"",
+        "nombre":"",
+        "cedula":"",
+        "vuelos_asignados":""    
+    }
+    if request.method=='POST':
+        if form.nombre.data=="":
+            
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM pilotos WHERE id_Piloto = ?', [form.id_piloto.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+
+
+        else:
+            id_Piloto=(form.id_piloto.data)
+            nombre_piloto=form.nombre.data
+            cedula=form.cedula.data
+            trama_vuelos=str(form.vuelos.data)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("UPDATE pilotos SET nombre=?, cedula=?, vuelos_asignados=? WHERE id_Piloto=?", [nombre_piloto,cedula,trama_vuelos,id_Piloto])
+                    con.commit()
+                    print("Piloto editado")
+            except Error:
+                print(Error)
+        
+    return render_template('editar_piloto.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
+@app.route("/eliminar_piloto", methods=['GET','POST'])
+def eliminar_piloto():
+    global nombre
+    global sesion_iniciada
+    form=piloto()
+    row={
+        "id_Piloto":"",
+        "nombre":"",
+        "cedula":"",
+        "vuelos_asignados":""    
+    }
+    if request.method=='POST':
+        if form.nombre.data=="":
+            
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM pilotos WHERE id_Piloto = ?', [form.id_piloto.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+        else:
+            id_Piloto=(form.id_piloto.data)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("DELETE FROM pilotos WHERE id_Piloto=?", [id_Piloto])
+                    con.commit()
+                    print("Piloto eliminado")
+            except Error:
+                print(Error)
+        
+    return render_template('eliminar_piloto.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
 
 
 if (__name__=="__main__"):

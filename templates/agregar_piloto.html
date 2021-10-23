@@ -1,18 +1,13 @@
 {%extends "base.html"%}
 
-{%block title%} Agregar Vuelo {%endblock%}
+{%block title%} Agregar Piloto {%endblock%}
 
 {%block body%}
-    <h1>Admin - Agregar Vuelo</h1>
+    <h1>Admin - Agregar Piloto</h1>
     <br>
-    <form action="{{ url_for('agregar_vuelo') }}" method="POST" name="formAgregarVuelo" onsubmit="validar_formulario();">
-        <p>Nombre Administrador: <input type="text" id="nombre_admin" name="nombre_admin" maxlength="50"/></p>
-        <p>Código Administrador: <input type="text" id="codigo_admin" name="codigo_admin" maxlength="50"/></p>
-        <p>Aeropuerto origen: <input type="text" id="airport_depart" name="airport_depart" maxlength="50"/></p>
-        <p>Aeropuerto destino: <input type="text" id="airport_destiny" name="airport_destiny" maxlength="50"/></p>
-        <p>Hora de salida: <input type="datetime-local" id="date_depart" name="date_depart" maxlength="50"/></p>
-        <p>Hora de llegada: <input type="datetime-local" id="date_arrival" name="date_arrival" maxlength="50"/></p>
-        <p>Código del vuelo: <input type="text" id="codigo_vuelo" name="codigo_vuelo" maxlength="50"/></p>
-        <br>
-        <button type="submit" value="Enviar">Enviar</button>
+    <form action="{{ url_for('agregar_piloto') }}" method="POST" name="formAgregarPiloto">
+        <p>Nombre Completo: {{form.nombre}}</p>
+        <p>Cedula: {{form.cedula}}</p>
+        <p>Trama de vuelos asignados: {{form.vuelos}} </p>
+        <p>{{form.enviar}}</p>
 {%endblock%}

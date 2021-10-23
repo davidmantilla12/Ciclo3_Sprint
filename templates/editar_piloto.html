@@ -1,0 +1,14 @@
+{%extends "base.html"%}
+
+{%block title%} Editar Piloto {%endblock%}
+
+{%block body%}
+    <h1>Admin - Editar Piloto</h1>
+    <br>
+    <form action="{{ url_for('editar_piloto') }}" method="POST" name="formEditarPiloto">
+        <p>ID del piloto: {{form.id_piloto(value=row["id_Piloto"])}} </p>
+        <p>Nombre completo: {{form.nombre(value=row["nombre"])}}</p>
+        <p>Cedula: {{form.cedula(value=row["cedula"])}}</p>
+        <p>Trama de vuelos: {{form.vuelos(value=row["vuelos_asignados"])}} </p>
+        <p>{{form.enviar(value="Editar piloto")}} {{form.completar}} </p>
+{%endblock%}
