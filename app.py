@@ -134,25 +134,90 @@ def agregar_vuelo():
 @app.route("/editar_vuelo", methods=['GET','POST'])
 def editar_vuelo():
     form=vuelo()
+    row={
+        "id_Vuelo":"",
+        "origen":"",
+        "destino":"",
+        "hora_salida":"",
+        "hora_llegada":"",
+        "fecha":"",
+        "piloto":"",
+        "asientos":"",
+        "valor":"",
+    }
     if request.method=='POST':
-        origen=form.origen.data
-        destino=form.destino.data
-        hora_salida=str(form.hora_salida.data)
-        hora_llegada=str(form.hora_llegada.data) 
-        fecha=str(form.fecha.data)
-        piloto=form.piloto.data
-        asientos=form.asientos.data
-        valor=str(form.valor.data)
-        try:
-            with sqlite3.connect('viajesun.db') as con:
-                cur=con.cursor()                
-                cur.execute("INSERT INTO vuelos (origen, destino, hora_salida, hora_llegada, fecha, piloto, asientos, valor) VALUES (?,?,?,?,?,?,?,?);", [origen,destino,hora_salida,hora_llegada,fecha,piloto,asientos,valor])
-                con.commit()
-                print("Vuelo añadido")
-        except Error:
-            print(Error)
+        if form.origen.data=="":
+            
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_vuelo.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+
+
+        else:
+            id_Vuelo=(form.id_vuelo.data)
+            origen=form.origen.data
+            destino=form.destino.data
+            hora_salida=str(form.hora_salida.data)
+            hora_llegada=str(form.hora_llegada.data) 
+            fecha=str(form.fecha.data)
+            piloto=form.piloto.data
+            asientos=form.asientos.data
+            valor=str(form.valor.data)
+            print(id_Vuelo,origen,destino,hora_llegada,hora_salida,fecha,piloto,asientos,valor)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("UPDATE vuelos SET origen=?, destino=?, hora_salida=?, hora_llegada=?, fecha=?, piloto=?, asientos=?, valor=? WHERE id_Vuelo=?", [origen,destino,hora_salida,hora_llegada,fecha,piloto,asientos,valor,id_Vuelo])
+                    con.commit()
+                    print("Vuelo editado")
+            except Error:
+                print(Error)
         
-    return render_template('editar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form)
+    return render_template('editar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
+@app.route("/eliminar_vuelo", methods=['GET','POST'])
+def eliminar_vuelo():
+    form=vuelo()
+    row={
+        "id_Vuelo":"",
+        "origen":"",
+        "destino":"",
+        "hora_salida":"",
+        "hora_llegada":"",
+        "fecha":"",
+        "piloto":"",
+        "asientos":"",
+        "valor":"",
+    }
+    if request.method=='POST':
+        if form.origen.data=="":
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_vuelo.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+
+        else:
+            id_Vuelo=(form.id_vuelo.data)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("DELETE FROM vuelos WHERE id_Vuelo=?", [id_Vuelo])
+                    con.commit()
+                    print("Vuelo ELIMINADO")
+            except Error:
+                print(Error)
+        
+    return render_template('eliminar_vuelo.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
 
 if (__name__=="__main__"):
     app.run(debug=True)

@@ -5,15 +5,15 @@
 {%block body%}
     <h1>Admin - Editar Vuelo</h1>
     <br>
-    <form action="{{ url_for('editar_vuelo') }}" method="POST" name="formAgregarVuelo" onsubmit="validar_formulario();">
-        <p>ID del vuelo: {{form.id_vuelo}} </p>
-        <p>Ciudad origen: {{form.origen}}</p>
-        <p>Ciudad destino: {{form.destino}}</p>
-        <p>Hora de salida: {{form.hora_salida}} </p>
-        <p>Hora de llegada: {{form.hora_llegada}} </p>
-        <p>Fecha: {{form.fecha}} </p>
-        <p>Piloto: {{form.piloto}} </p>
-        <p>Trama de asientos: {{form.asientos}} </p>
-        <p>Valor: {{form.valor}} </p>
-        <p>{{form.enviar}}</p>
+    <form action="{{ url_for('editar_vuelo') }}" method="POST" name="formAgregarVuelo">
+        <p>ID del vuelo: {{form.id_vuelo(value=row["id_Vuelo"])}} </p>
+        <p>Ciudad origen: {{form.origen(value=row["origen"])}}</p>
+        <p>Ciudad destino: {{form.destino(value=row["destino"])}}</p>
+        <p>Hora de salida: {{form.hora_salida(value=row["hora_salida"])}} </p>
+        <p>Hora de llegada: {{form.hora_llegada(value=row["hora_llegada"])}} </p>
+        <p>Fecha: {{form.fecha(value=row["fecha"])}} </p>
+        <p>Piloto: {{form.piloto(value=row["piloto"])}} </p>
+        <p>Trama de asientos: {{form.asientos(value=row["asientos"])}} </p>
+        <p>Valor: {{form.valor(value=row["valor"])}} </p>
+        <p>{{form.enviar(value="Editar vuelo")}} {{form.completar}} </p>
 {%endblock%}
