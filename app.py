@@ -3,9 +3,11 @@ import sqlite3
 from sqlite3 import Error
 
 from flask import Flask, flash, redirect, render_template, request
+from flask_wtf import form
 
-from vuelos import vuelo
 from pilotos import piloto
+from vuelos import vuelo
+from comentarios import comentario
 
 app = Flask(__name__)
 app.secret_key=os.urandom(24)
@@ -96,12 +98,6 @@ def reserva():
     ida= request.args.get("vuelo_ida")
     vuelta=request.args.get("vuelo_vuelta")
     return render_template("reserva.html",sesion_iniciada=sesion_iniciada,nombre=nombre,ida=ida,vuelta=vuelta)
-
-@app.route("/coment_eval")
-def coment_eval():
-    global nombre
-    global sesion_iniciada
-    return render_template("coment_eval.html",sesion_iniciada=sesion_iniciada,nombre=nombre)
 
 @app.route("/Mis_vuelos", methods=["GET"])
 def misVuelos():
@@ -319,6 +315,102 @@ def eliminar_piloto():
                 print(Error)
         
     return render_template('eliminar_piloto.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
+
+@app.route("/agregar_comentario", methods=['POST','GET'])
+def agregar_comentario():
+    global nombre
+    global sesion_iniciada
+    form = comentario()
+    usuario=form.usuario.data
+    puntuacion=form.puntuacion.data
+    comentario2=form.comentario.data
+    id_vuelo=form.id_vuelo.data
+    try:
+        with sqlite3.connect('viajesun.db') as con:
+            cur=con.cursor()                
+            cur.execute("INSERT INTO comentarios (usuario,puntuacion,comentario,id_vuelo) VALUES (?,?,?,?);", [usuario,puntuacion,comentario2,id_vuelo])
+            con.commit()
+            print("Comentario agregado")
+    except Error:
+        print(Error)    
+    return render_template('agregar_comentario.html',sesion_iniciada=sesion_iniciada, nombre=nombre, form=form)
+
+@app.route("/editar_comentario", methods=['GET','POST'])
+def editar_comentario():
+    global nombre
+    global sesion_iniciada
+    form=comentario()
+    row={
+        "id_Vuelo":"",
+        "usuario":"",
+        "puntuacion":"",
+        "comentario":"",
+    }
+    if request.method=='POST':
+        if form.origen.data=="":
+            
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_comentario.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+
+        else:
+            id_comentario=(form.id_comentario.data)
+            usuario=form.usuario.data
+            puntuacion=form.puntuacion.data
+            comentario2=str(form.comentario.data)
+            id_vuelo=str(form.id_vuelo.data) 
+            print(id_comentario,usuario,puntuacion,comentario2,id_vuelo)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("UPDATE comentarios SET usuario=?, puntuacion=?, comentario=?, id_vuelo=? WHERE id_comentario=?", [usuario,puntuacion,comentario,id_vuelo])
+                    con.commit()
+                    print("comentario editado")
+            except Error:
+                print(Error)
+        
+    return render_template('editar_comentario.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
+
+@app.route("/eliminar_comentario", methods=['GET','POST'])
+def eliminar_comentario():
+    global nombre
+    global sesion_iniciada
+    form=comentario()
+    row={
+        "id_Vuelo":"",
+        "usuario":"",
+        "puntuacion":"",
+        "comentario":"",
+    }
+    if request.method=='POST':
+        if form.origen.data=="":
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    con.row_factory=sqlite3.Row
+                    cur = con.cursor()
+                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_comentario.data])
+                    row = cur.fetchone() 
+            except Error:
+                print(Error)
+
+        else:
+            id_comentario=(form.id_comentario.data)
+            try:
+                with sqlite3.connect('viajesun.db') as con:
+                    cur=con.cursor()                
+                    cur.execute("DELETE FROM vuelos WHERE id_Vuelo=?", [id_comentario])
+                    con.commit()
+                    print("Vuelo ELIMINADO")
+            except Error:
+                print(Error)
+        
+    return render_template('eliminar_comentario.html',sesion_iniciada=sesion_iniciada,nombre=nombre,form=form,row=row)
 
 
 if (__name__=="__main__"):
