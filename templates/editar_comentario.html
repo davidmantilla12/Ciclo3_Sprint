@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+
+{%block title%} Editar Comentario {%endblock%}
+
+{%block body%}
+    <h1>Admin - Editar Comentario</h1>
+    <br>
+    <form action="{{ url_for('editar_comentario') }}" method="POST" name="formEditarComentario">
+        <p>ID del comentario: {{form.id_comentario(value=row["id_comentario"])}} </p>
+        <p>ID del vuelo: {{form.id_vuelo(value=row["id_vuelo"])}}</p>
+        <p>usuario: {{form.usuario(value=row["usuario"])}}</p>
+        <p>puntuacion: {{form.puntuacion(value=row["puntuacion"])}}</p>
+        <p>Comentario: {{form.comentario(value=row["comentario"])}} </p>
+        <p>{{form.enviar(value="Editar comentario")}} {{form.completar}} </p>
+{%endblock%}

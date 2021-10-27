@@ -342,19 +342,19 @@ def editar_comentario():
     global sesion_iniciada
     form=comentario()
     row={
-        "id_Vuelo":"",
+        "id_vuelo":"",
         "usuario":"",
         "puntuacion":"",
         "comentario":"",
     }
     if request.method=='POST':
-        if form.origen.data=="":
+        if form.usuario.data=="":
             
             try:
                 with sqlite3.connect('viajesun.db') as con:
                     con.row_factory=sqlite3.Row
                     cur = con.cursor()
-                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_comentario.data])
+                    cur.execute('SELECT * FROM comentarios WHERE id_comentario = ?', [form.id_comentario.data])
                     row = cur.fetchone() 
             except Error:
                 print(Error)
@@ -364,12 +364,12 @@ def editar_comentario():
             usuario=form.usuario.data
             puntuacion=form.puntuacion.data
             comentario2=str(form.comentario.data)
-            id_vuelo=str(form.id_vuelo.data) 
+            id_vuelo=(form.id_vuelo.data) 
             print(id_comentario,usuario,puntuacion,comentario2,id_vuelo)
             try:
                 with sqlite3.connect('viajesun.db') as con:
                     cur=con.cursor()                
-                    cur.execute("UPDATE comentarios SET usuario=?, puntuacion=?, comentario=?, id_vuelo=? WHERE id_comentario=?", [usuario,puntuacion,comentario,id_vuelo])
+                    cur.execute("UPDATE comentarios SET usuario=?, puntuacion=?, comentario=?, id_vuelo=? WHERE id_comentario=?", [usuario,puntuacion,comentario2,id_vuelo,id_comentario])
                     con.commit()
                     print("comentario editado")
             except Error:
