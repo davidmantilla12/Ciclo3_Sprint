@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+
+{%block title%} Eliminar Comentario {%endblock%}
+
+{%block body%}
+    <h1>Admin - Eliminar Comentario</h1>
+    <br>
+    <form action="{{ url_for('eliminar_comentario') }}" method="POST" name="formEliminarComentario">
+        <p>ID del comentario: {{form.id_comentario(value=row["id_comentario"])}} </p>
+        <p>ID del vuelo: {{form.id_vuelo(value=row["id_vuelo"])}} </p>
+        <p>usuario: {{form.usuario(value=row["usuario"])}}</p>
+        <p>puntuacion: {{form.puntuacion(value=row["puntuacion"])}}</p>
+        <p>comentario: {{form.comentario(value=row["comentario"])}} </p>
+        <p>{{form.enviar(value="Eliminar comentario")}} {{form.completar}} </p>
+{%endblock%}

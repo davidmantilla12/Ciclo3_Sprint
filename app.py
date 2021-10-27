@@ -383,18 +383,18 @@ def eliminar_comentario():
     global sesion_iniciada
     form=comentario()
     row={
-        "id_Vuelo":"",
+        "id_vuelo":"",
         "usuario":"",
         "puntuacion":"",
         "comentario":"",
     }
     if request.method=='POST':
-        if form.origen.data=="":
+        if form.usuario.data=="":
             try:
                 with sqlite3.connect('viajesun.db') as con:
                     con.row_factory=sqlite3.Row
                     cur = con.cursor()
-                    cur.execute('SELECT * FROM vuelos WHERE id_Vuelo = ?', [form.id_comentario.data])
+                    cur.execute('SELECT * FROM comentarios WHERE id_comentario = ?', [form.id_comentario.data])
                     row = cur.fetchone() 
             except Error:
                 print(Error)
@@ -404,9 +404,9 @@ def eliminar_comentario():
             try:
                 with sqlite3.connect('viajesun.db') as con:
                     cur=con.cursor()                
-                    cur.execute("DELETE FROM vuelos WHERE id_Vuelo=?", [id_comentario])
+                    cur.execute("DELETE FROM comentarios WHERE id_comentario=?", [id_comentario])
                     con.commit()
-                    print("Vuelo ELIMINADO")
+                    print("comentario ELIMINADO")
             except Error:
                 print(Error)
         
